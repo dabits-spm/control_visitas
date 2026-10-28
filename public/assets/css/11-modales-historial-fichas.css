@@ -1,0 +1,184 @@
+/* Control de Visitas · 19. Versión 1.6: barra lateral en pantallas chicas, modales, historial y fichas */
+/* Hoja 11 de 15: se cargan en orden (ver hojasDeEstilo() en app/helpers/vista.php). */
+
+
+
+/* ---------- 19. Versión 1.6: barra lateral en pantallas chicas, modales, historial y fichas ---------- */
+
+/* Pantallas chicas: el menú lateral se abre encima del contenido */
+@media screen and (max-width: 960px) {
+    .barra-lateral { transform: translateX(-100%); box-shadow: none; }
+    .area-principal { margin-left: 0; }
+    .barra-lateral-abierta .barra-lateral { transform: none; box-shadow: 8px 0 24px rgba(0, 0, 0, .25); }
+    .barra-lateral-abierta .barra-lateral-fondo {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 55;
+        background: rgba(17, 18, 22, .45);
+    }
+}
+@media screen and (max-width: 560px) {
+    .menu-usuario-nombre { display: none; }
+    .barra-superior { padding: 0 12px; gap: 10px; }
+}
+
+/* --- Ventanas modales (estructura de Bootstrap sobre <dialog>) --- */
+dialog.modal {
+    width: min(480px, calc(100% - 32px));
+    max-height: calc(100% - 32px);
+    margin: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    color: var(--texto);
+    overflow: visible;
+}
+dialog.modal::backdrop { background: rgba(17, 18, 22, .5); }
+dialog.modal[open] { animation: modal-entrar .18s ease-out; }
+dialog.modal[open]::backdrop { animation: modal-fondo .18s ease-out; }
+@keyframes modal-entrar { from { opacity: 0; transform: translateY(-14px) scale(.98); } }
+@keyframes modal-fondo  { from { opacity: 0; } }
+
+.modal-dialog { margin: 0; }
+.modal-content {
+    background: var(--superficie);
+    border-radius: 12px;
+    box-shadow: 0 24px 60px rgba(16, 24, 40, .28);
+    overflow: hidden;
+}
+.modal-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 20px 6px;
+}
+.modal-title { font-size: 1.1rem; font-weight: 700; }
+.modal-cerrar {
+    margin-left: auto;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    color: var(--texto-tenue);
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+}
+.modal-cerrar:hover { background: var(--fondo); color: var(--texto); }
+.modal-icono {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--gris-claro);
+    color: var(--texto-suave);
+    flex-shrink: 0;
+}
+.modal-icono-peligro { background: var(--error-claro); color: var(--error); }
+.modal-icono-reprogramar { background: var(--violeta-claro); color: var(--violeta); }
+.modal-body { padding: 10px 20px 16px; font-size: .95rem; color: var(--texto-suave); }
+.modal-body p + .rejilla, .modal-body p + .campo { margin-top: 14px; }
+.modal-body strong { color: var(--texto); }
+.modal-body textarea { min-height: 120px; }
+.modal-nota { margin-top: 4px; font-size: .82rem; color: var(--texto-tenue); }
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 14px 20px;
+    background: var(--fondo);
+    border-top: 1px solid var(--borde);
+}
+.boton-peligro-lleno,
+.boton-peligro-lleno:hover { background: var(--error); }
+.boton-peligro-lleno:hover { filter: brightness(.92); }
+@media screen and (max-width: 560px) {
+    .modal-footer { flex-direction: column-reverse; }
+    .modal-footer .boton { width: 100%; }
+    .modal-body .rejilla-2 { grid-template-columns: 1fr; }
+}
+
+/* --- Estado Reprogramada --- */
+:root { --violeta: #7c3aed; --violeta-claro: #efe7fd; }
+.insignia-reprogramada { background: var(--violeta); }
+.muestra-reprogramada  { background: var(--violeta); }
+.trazo-reprogramada    { stroke: var(--violeta); }
+
+/* Etiqueta gris de las visitas que vienen de una cita */
+.etiqueta-cita {
+    display: inline-block;
+    margin: 4px 0 0;
+    padding: 1px 7px;
+    border-radius: 4px;
+    background: var(--gris-claro);
+    color: var(--gris);
+    font-size: .7rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.tabla td > .etiqueta-cita { display: table; }
+
+/* --- Celdas de las tablas --- */
+.enlace-visitante { color: var(--texto); font-weight: 600; text-decoration: none; }
+.enlace-visitante:hover { color: var(--rojo-600); text-decoration: underline; }
+.tabla td .enlace-visitante + small { display: block; }
+.sin-salto { white-space: nowrap; }
+.texto-correo { overflow-wrap: anywhere; }
+.fecha-celda { font-weight: 600; white-space: nowrap; }
+.tabla .horario { display: grid; color: var(--texto-tenue); white-space: nowrap; }
+.tabla td[data-etiqueta="Visitante"] { min-width: 130px; }
+.celda-obs { min-width: 130px; max-width: 220px; }
+.celda-observaciones { display: grid; gap: 2px; justify-items: start; }
+.texto-observaciones { font-size: .85rem; white-space: normal; overflow-wrap: anywhere; }
+.texto-ninguna { font-size: .85rem; color: var(--texto-tenue); font-style: italic; }
+.acciones-visita { display: grid; gap: 4px; justify-items: start; }
+.acciones-admin { display: flex; flex-wrap: wrap; gap: 4px 12px; }
+.acciones-admin form { margin: 0; }
+.boton-enlace-peligro { color: var(--error); }
+.fila-hoy { background: #fffaf0; }
+.marca-hoy {
+    display: inline-block;
+    margin-top: 3px;
+    padding: 0 6px;
+    border-radius: 4px;
+    background: var(--ambar-claro);
+    color: #7a5200;
+    font-size: .7rem;
+    font-weight: 700;
+}
+.tabla-historial { font-size: .86rem; }
+.tabla-historial thead th { padding-left: 8px; padding-right: 8px; white-space: normal; vertical-align: bottom; }
+.tabla-historial tbody td { padding-left: 8px; padding-right: 8px; }
+.tabla-historial .celda-motivo { min-width: 90px; }
+.tabla-historial .celda-obs { min-width: 105px; }
+.tabla-historial td[data-etiqueta="Visitante"] { min-width: 115px; }
+.tabla-historial .celda-motivo, .tabla-historial td[data-etiqueta="Departamento"] { overflow-wrap: anywhere; }
+.tabla-historial .selector-estado { min-width: 124px; padding-left: 6px; font-size: .76rem; }
+
+/* --- Ficha del visitante --- */
+.ficha-visitante { margin-bottom: 24px; }
+.ficha-cabecera { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.ficha-cabecera h2 { font-size: 1.35rem; }
+.ficha-cabecera .texto-mono { color: var(--texto-suave); }
+.ficha-acciones { margin-left: auto; }
+.ficha-acciones form { margin: 0; }
+.avatar-grande { width: 56px; height: 56px; font-size: 1.1rem; }
+.ficha-datos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 14px 24px;
+    margin: 20px 0 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--borde);
+}
+.ficha-datos dt { font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .3px; color: var(--texto-tenue); }
+.ficha-datos dd { margin: 2px 0 0; font-weight: 500; overflow-wrap: anywhere; }
+@media screen and (max-width: 760px) {
+    .ficha-acciones { margin-left: 0; width: 100%; }
+    .ficha-acciones .boton { flex: 1; }
+    .celda-obs { max-width: none; }
+}

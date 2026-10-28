@@ -1,0 +1,174 @@
+/* Control de Visitas · 10. Formularios */
+/* Hoja 6 de 15: se cargan en orden (ver hojasDeEstilo() en app/helpers/vista.php). */
+
+
+/* ---------- 10. Formularios ---------- */
+.formulario { display: grid; gap: 20px; }
+
+.seccion-formulario { padding: 24px; }
+
+.seccion-titulo {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--borde);
+}
+.seccion-titulo h2 { font-size: 1.1rem; font-weight: 600; }
+.seccion-titulo p { font-size: .86rem; color: var(--texto-suave); margin-top: 2px; }
+
+.paso {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--vino-800);
+    color: #fff;
+    font-weight: 700;
+    font-size: .9rem;
+}
+
+.rejilla { display: grid; gap: 4px 20px; }
+.rejilla-2 { grid-template-columns: repeat(2, 1fr); }
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 6px;
+    min-width: 0;
+}
+
+.campo label,
+.campo legend {
+    font-size: .86rem;
+    font-weight: 600;
+    color: #333841;
+    margin-bottom: 6px;
+}
+.obligatorio { color: var(--error); font-weight: 700; }
+.opcional { color: var(--texto-tenue); font-weight: 400; }
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+input[type="search"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    font: inherit;
+    font-size: .93rem;
+    color: var(--texto);
+    background: var(--superficie);
+    border: 1px solid var(--borde-fuerte);
+    border-radius: var(--radio-chico);
+    transition: border-color .15s, box-shadow .15s;
+}
+textarea { resize: vertical; min-height: 84px; }
+input::placeholder, textarea::placeholder { color: #a3a8b1; }
+
+input:hover, select:hover, textarea:hover { border-color: #b5bac3; }
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--rojo-500);
+    box-shadow: 0 0 0 3px rgba(196, 26, 43, .12);
+}
+
+/* Campo con icono a la izquierda */
+.control-icono { position: relative; }
+.control-icono > .icono {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 17px;
+    height: 17px;
+    color: var(--texto-tenue);
+    pointer-events: none;
+}
+.control-icono input { padding-left: 40px; }
+.control-icono:focus-within > .icono { color: var(--rojo-500); }
+
+/* Mensajes de error por campo */
+.campo-error {
+    min-height: 1.25em;
+    margin-top: 4px;
+    font-size: .78rem;
+    color: var(--error);
+}
+.con-error input,
+.con-error select,
+.con-error textarea {
+    border-color: var(--error);
+    background: #fffafa;
+}
+.con-error .control-icono > .icono { color: var(--error); }
+.campo.valido input { border-color: #7fc89d; }
+
+/* Indicador de búsqueda de cédula */
+.indicador-busqueda {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    margin-top: -8px;
+    border: 2px solid var(--borde-fuerte);
+    border-top-color: var(--rojo-500);
+    border-radius: 50%;
+    opacity: 0;
+}
+.indicador-busqueda.buscando { opacity: 1; animation: girar .7s linear infinite; }
+
+.aviso-visitante {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: -6px 0 18px;
+    padding: 10px 14px;
+    border-radius: var(--radio-chico);
+    background: var(--azul-claro);
+    color: #1d4f9e;
+    font-size: .86rem;
+    animation: aparecer .2s ease-out;
+}
+
+/* Departamentos como "chips" seleccionables */
+fieldset.campo { border: 0; padding: 0; margin: 8px 0 6px; }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip { position: relative; cursor: pointer; }
+.chip input { position: absolute; opacity: 0; pointer-events: none; }
+.chip span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: 1px solid var(--borde-fuerte);
+    border-radius: 999px;
+    font-size: .87rem;
+    background: var(--superficie);
+    transition: background .15s, border-color .15s, color .15s;
+}
+.chip .icono { width: 0; height: 14px; transition: width .15s; }
+.chip:hover span { border-color: var(--rojo-500); }
+.chip input:checked + span {
+    background: var(--rojo-600);
+    border-color: var(--rojo-600);
+    color: #fff;
+    font-weight: 600;
+}
+.chip input:checked + span .icono { width: 14px; }
+.chip input:focus-visible + span { outline: 3px solid rgba(196, 26, 43, .35); outline-offset: 2px; }
+.con-error .chip span { border-color: #f0a3ab; }
+
+.acciones-formulario {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}

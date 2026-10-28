@@ -1,0 +1,100 @@
+/* Control de Visitas · 22. Selector de hora (12 horas, AM/PM) */
+/* Hoja 14 de 15: se cargan en orden (ver hojasDeEstilo() en app/helpers/vista.php). */
+
+
+/* ---------- 22. Selector de hora (12 horas, AM/PM) ---------- */
+.selector-hora { position: relative; }
+.selector-hora .selector-hora-texto {
+    padding-right: 44px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: .3px;
+}
+.selector-hora-boton {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: var(--radio-chico);
+    background: transparent;
+    color: var(--texto-suave);
+    cursor: pointer;
+}
+.selector-hora-boton:hover,
+.selector-hora.abierto .selector-hora-boton { background: var(--rojo-100); color: var(--rojo-500); }
+.selector-hora-boton .icono { width: 18px; height: 18px; }
+
+.selector-hora-panel {
+    position: absolute;
+    z-index: 60;
+    top: calc(100% + 6px);
+    left: 0;
+    width: 264px;
+    padding: 10px;
+    background: var(--superficie);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+    box-shadow: 0 12px 32px rgba(16, 24, 40, .18);
+    animation: aparecer .12s ease-out;
+}
+.selector-hora-panel.hacia-arriba { top: auto; bottom: calc(100% + 6px); }
+.selector-hora-columnas {
+    display: grid;
+    grid-template-columns: 1fr 1fr .85fr;
+    gap: 6px;
+}
+.selector-hora-columna { display: flex; flex-direction: column; min-width: 0; }
+.selector-hora-titulo {
+    height: 20px;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    color: var(--texto-tenue);
+    text-align: center;
+}
+.selector-hora-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-height: 196px;
+    overflow-y: auto;
+    padding: 2px;
+    scrollbar-width: thin;
+}
+.selector-hora-opcion {
+    flex-shrink: 0;
+    padding: 7px 0;
+    border: 0;
+    border-radius: var(--radio-chico);
+    background: transparent;
+    color: var(--texto);
+    font: inherit;
+    font-size: .92rem;
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+}
+.selector-hora-opcion:hover { background: var(--fondo); }
+.selector-hora-opcion.elegida { background: var(--rojo-500); color: #fff; font-weight: 700; }
+.selector-hora-columna:last-child .selector-hora-opcion { padding: 10px 0; font-weight: 600; }
+.selector-hora-pie {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--borde);
+}
+.selector-hora-pie .boton { flex: 1; justify-content: center; }
+/* En una ventana modal el panel debe poder salir del cuerpo del modal */
+.modal-content:has(.selector-hora) { overflow: visible; }
+.modal-content:has(.selector-hora) > :first-child { border-radius: 12px 12px 0 0; }
+.modal-content:has(.selector-hora) > :last-child { border-radius: 0 0 12px 12px; }
+@media screen and (max-width: 560px) {
+    .selector-hora-panel { width: min(264px, calc(100vw - 48px)); }
+}
+@media print { .selector-hora-boton, .selector-hora-panel { display: none !important; } }

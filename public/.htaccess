@@ -1,0 +1,8 @@
+# public/.htaccess
+RewriteEngine On
+
+# Si lo pedido no es un archivo ni una carpeta real (css, js, img...),
+# se envía a index.php guardando la ruta en el parámetro "url".
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]

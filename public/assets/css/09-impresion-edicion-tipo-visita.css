@@ -1,0 +1,181 @@
+/* Control de Visitas · 15. Impresión / PDF; 16. Edición, visitantes y reporte personalizado; 17. Tipo de visita (al momento / programada) */
+/* Hoja 9 de 15: se cargan en orden (ver hojasDeEstilo() en app/helpers/vista.php). */
+
+
+/* ---------- 15. Impresión / PDF ---------- */
+@media print {
+    @page { size: A4; margin: 14mm 12mm; }
+
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+    body { display: block; min-height: 0; font-size: 11pt; background: #fff; }
+    .barra-superior,
+    .barra-lateral,
+    .barra-lateral-fondo,
+    dialog.modal,
+    .pie-pagina,
+    .no-imprimir { display: none !important; }
+    .area-principal { margin-left: 0 !important; min-height: 0; }
+    .solo-impresion { display: block; }
+
+    .contenedor { max-width: none; padding: 0; }
+
+    .panel,
+    .tarjeta-dato { box-shadow: none; border: 1px solid var(--borde-fuerte); }
+    .tarjeta-dato:hover { transform: none; box-shadow: none; }
+    .tarjetas-resumen { gap: 10px; margin-bottom: 14px; }
+    .tarjeta-dato { padding: 10px 14px; }
+    .dato-numero { font-size: 1.6rem; }
+    .dato-icono { display: none; }
+
+    .bloque-reporte { padding: 12px; margin-bottom: 14px; }
+    .tabla-contenedor { overflow: visible; }
+    .tabla thead { display: table-header-group; } /* repite el encabezado en cada hoja */
+    .tabla tr { break-inside: avoid; }
+    .tabla tbody tr:hover { background: none; }
+    .tabla thead th,
+    .tabla tbody td,
+    .tabla-reporte tfoot th,
+    .tabla-reporte tfoot td { padding: 5px 8px; }
+    .panel-cabecera { margin-bottom: 8px; }
+}
+
+/* ---------- 16. Edición, visitantes y reporte personalizado ---------- */
+.boton-peligro {
+    background: var(--superficie);
+    color: var(--error);
+    border-color: #f0a3ab;
+}
+.boton-peligro:hover { background: var(--error); border-color: var(--error); color: #fff; }
+
+.acciones-fila { display: flex; flex-wrap: wrap; gap: 6px; }
+.tabla .numero { text-align: right; font-variant-numeric: tabular-nums; }
+
+.rejilla-3 { grid-template-columns: repeat(3, 1fr); }
+
+/* Datos de solo lectura del visitante al editar una visita */
+.resumen-visita {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 40px;
+}
+.resumen-visita > div:not(.celda-visitante) { display: grid; gap: 4px; justify-items: start; }
+.resumen-visita small { font-size: .78rem; }
+.celda-visitante small { display: block; }
+
+/* Pestañas de los reportes */
+.pestanas {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--borde);
+    overflow-x: auto;
+}
+.pestanas a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    margin-bottom: -2px;
+    border-bottom: 2px solid transparent;
+    color: var(--texto-suave);
+    font-weight: 600;
+    font-size: .9rem;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.pestanas a:hover { color: var(--texto); }
+.pestanas a.activa { color: var(--rojo-600); border-bottom-color: var(--rojo-600); }
+
+.filtros-personalizado { margin-bottom: 24px; }
+.filtros-personalizado fieldset.campo { margin-top: 12px; }
+.acciones-filtros {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--borde);
+}
+
+/* Resumen por estado del reporte personalizado */
+.resumen-estados {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+.resumen-estado {
+    display: grid;
+    gap: 4px;
+    justify-items: start;
+    padding: 14px 16px;
+    background: var(--superficie);
+    border-radius: var(--radio);
+    box-shadow: var(--sombra);
+    font-size: .86rem;
+    color: var(--texto-suave);
+}
+.resumen-numero {
+    font-size: 1.7rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--texto);
+    font-variant-numeric: tabular-nums;
+}
+.tabla-detalle small { display: block; }
+
+@media screen and (max-width: 960px) {
+    .rejilla-3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media screen and (max-width: 760px) {
+    .rejilla-3 { grid-template-columns: 1fr; }
+    .acciones-filtros { flex-direction: column-reverse; }
+    .acciones-filtros .boton { width: 100%; }
+    .tabla .numero { text-align: left; }
+}
+
+@media print {
+    .resumen-estados { gap: 8px; margin-bottom: 14px; }
+    .resumen-estado { box-shadow: none; border: 1px solid var(--borde-fuerte); padding: 8px 12px; }
+    .resumen-numero { font-size: 1.3rem; }
+    .tabla-detalle { font-size: 9pt; }
+}
+
+/* ---------- 17. Tipo de visita (al momento / programada) ---------- */
+.opciones-tipo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+.opcion-tipo { position: relative; cursor: pointer; }
+.opcion-tipo input { position: absolute; opacity: 0; pointer-events: none; }
+.opcion-tipo span {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2px 12px;
+    align-items: center;
+    height: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--borde-fuerte);
+    border-radius: var(--radio);
+    background: var(--superficie);
+    transition: border-color .15s, background .15s;
+}
+.opcion-tipo .icono { grid-row: span 2; width: 22px; height: 22px; color: var(--texto-tenue); }
+.opcion-tipo strong { font-size: .95rem; }
+.opcion-tipo small { grid-column: 2; font-size: .8rem; color: var(--texto-suave); }
+.opcion-tipo:hover span { border-color: var(--rojo-500); }
+.opcion-tipo input:checked + span { border-color: var(--rojo-600); background: var(--rojo-100); }
+.opcion-tipo input:checked + span .icono { color: var(--rojo-600); }
+.opcion-tipo input:focus-visible + span { outline: 3px solid rgba(196, 26, 43, .35); outline-offset: 2px; }
+.con-error .opcion-tipo span { border-color: #f0a3ab; }
+
+/* Etiqueta pequeña con el tipo, debajo del estado en los listados */
+.tipo-visita { display: block; margin-top: 4px; font-size: .75rem; color: var(--texto-tenue); white-space: nowrap; }
+
+@media screen and (max-width: 760px) {
+    .opciones-tipo { grid-template-columns: 1fr; }
+}

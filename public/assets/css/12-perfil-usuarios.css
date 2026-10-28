@@ -1,0 +1,53 @@
+/* Control de Visitas · 20. Versión 1.7: Mi perfil y Gestión de Usuarios */
+/* Hoja 12 de 15: se cargan en orden (ver hojasDeEstilo() en app/helpers/vista.php). */
+
+
+/* ---------- 20. Versión 1.7: Mi perfil y Gestión de Usuarios ---------- */
+
+/* Indicador de estado de una cuenta */
+.estado-cuenta {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 3px 11px 3px 9px;
+    border-radius: 999px;
+    font-size: .8rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+.estado-punto { width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+.estado-activo { background: var(--verde-claro); color: var(--verde); }
+.estado-activo .estado-punto { box-shadow: 0 0 0 3px rgba(30, 138, 76, .2); }
+.estado-inactivo { background: var(--gris-claro); color: var(--gris); }
+
+/* Tarjeta de Mi perfil */
+.tarjeta-perfil { max-width: 760px; }
+.perfil-cabecera { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.perfil-cabecera h2 { font-size: 1.35rem; }
+.perfil-cabecera > .estado-cuenta { margin-left: auto; }
+.perfil-rol { color: var(--texto-suave); font-size: .9rem; }
+.perfil-datos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.perfil-acciones { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--borde); }
+.perfil-nota {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 22px;
+    padding: 12px 14px;
+    border-radius: var(--radio-chico);
+    background: var(--azul-claro);
+    color: #1e4f9e;
+    font-size: .88rem;
+}
+.perfil-nota .icono { margin-top: 1px; }
+
+/* Gestión de Usuarios */
+.acciones-usuario { display: grid; gap: 4px; justify-items: start; }
+.acciones-usuario form { margin: 0; }
+.fila-inactiva td { color: var(--texto-tenue); }
+.fila-inactiva .avatar { filter: grayscale(1); opacity: .7; }
+
+@media screen and (max-width: 760px) {
+    .perfil-datos { grid-template-columns: 1fr; }
+    .perfil-cabecera > .estado-cuenta { margin-left: 0; }
+}

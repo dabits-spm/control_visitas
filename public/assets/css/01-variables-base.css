@@ -1,0 +1,83 @@
+/* Control de Visitas · 1. Variables de diseño; 2. Base */
+/* Hoja 1 de 15: se cargan en orden (ver hojasDeEstilo() en app/helpers/vista.php). */
+
+/* =====================================================================
+   Control de Visitas - Hoja de estilos principal
+   CSS puro, sin frameworks.
+   ===================================================================== */
+
+/* ---------- 1. Variables de diseño ---------- */
+:root {
+    /* Colores de marca (vino tinto) */
+    --vino-900: #4a000c;
+    --vino-800: #5c0010;
+    --vino-700: #7a0a1c;
+    --rojo-600: #a8101f;
+    --rojo-500: #c41a2b;
+    --rojo-100: #fde8ea;
+
+    /* Neutros */
+    --fondo: #f4f5f8;
+    --superficie: #ffffff;
+    --borde: #e3e5ea;
+    --borde-fuerte: #cdd1d8;
+    --texto: #1d1f24;
+    --texto-suave: #5f6570;
+    --texto-tenue: #8a909b;
+    --cabecera-tabla: #1f2024;
+
+    /* Estados */
+    --azul: #2563c9;      --azul-claro: #e7effc;
+    --ambar: #e09a00;     --ambar-claro: #fff4d6;
+    --verde: #1e8a4c;     --verde-claro: #e3f5ea;
+    --gris: #6b7280;      --gris-claro: #eef0f3;
+    --error: #c41a2b;     --error-claro: #fdecee;
+
+    /* Medidas */
+    --radio: 8px;
+    --radio-chico: 6px;
+    --sombra: 0 1px 2px rgba(16, 24, 40, .05), 0 1px 3px rgba(16, 24, 40, .06);
+    --sombra-media: 0 6px 18px rgba(16, 24, 40, .08);
+    --ancho-max: 1320px;
+    --fuente: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+    --fuente-mono: ui-monospace, "Cascadia Mono", Consolas, "Courier New", monospace;
+}
+
+/* ---------- 2. Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--fuente);
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--texto);
+    background: var(--fondo);
+}
+
+h1, h2, h3 { margin: 0; line-height: 1.25; }
+p { margin: 0; }
+a { color: var(--rojo-600); }
+img, svg { display: block; }
+[hidden] { display: none !important; }
+
+.icono {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+:focus-visible {
+    outline: 3px solid rgba(196, 26, 43, .35);
+    outline-offset: 2px;
+}

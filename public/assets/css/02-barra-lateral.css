@@ -1,0 +1,193 @@
+/* Control de Visitas · 3. Barra lateral (menú principal) y barra superior */
+/* Hoja 2 de 15: se cargan en orden (ver hojasDeEstilo() en app/helpers/vista.php). */
+
+
+/* ---------- 3. Barra lateral (menú principal) y barra superior ---------- */
+:root {
+    --ancho-barra-lateral: 248px;
+    --alto-barra-superior: 58px;
+}
+
+body.con-barra-lateral { display: block; }
+
+.saltar-contenido {
+    position: absolute;
+    left: -999px;
+    top: 8px;
+    z-index: 200;
+    padding: 8px 14px;
+    background: var(--superficie);
+    border-radius: var(--radio-chico);
+}
+.saltar-contenido:focus { left: 8px; }
+
+.barra-lateral {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 60;
+    width: var(--ancho-barra-lateral);
+    display: flex;
+    flex-direction: column;
+    background: var(--vino-900);
+    background-image: linear-gradient(180deg, var(--vino-800), var(--vino-900));
+    color: #fff;
+    transition: transform .22s ease;
+}
+
+.barra-lateral-marca {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: var(--alto-barra-superior);
+    padding: 0 20px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.05rem;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+    flex-shrink: 0;
+}
+.barra-lateral-marca .icono { width: 22px; height: 22px; color: #9cc4ff; }
+
+.barra-lateral-menu {
+    display: grid;
+    gap: 2px;
+    padding: 14px 10px;
+    overflow-y: auto;
+}
+.barra-lateral-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 12px;
+    border-radius: var(--radio-chico);
+    color: rgba(255, 255, 255, .82);
+    text-decoration: none;
+    font-size: .93rem;
+    font-weight: 500;
+    transition: background .15s, color .15s;
+}
+.barra-lateral-menu a:hover { background: rgba(255, 255, 255, .08); color: #fff; }
+.barra-lateral-menu a.activo {
+    background: rgba(255, 255, 255, .14);
+    color: #fff;
+    font-weight: 600;
+    box-shadow: inset 3px 0 0 #ffc94d;
+}
+.barra-lateral-menu .icono { width: 19px; height: 19px; opacity: .9; }
+.barra-lateral-contador {
+    margin-left: auto;
+    min-width: 22px;
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: #ffc94d;
+    color: var(--vino-900);
+    font-size: .74rem;
+    font-weight: 700;
+    text-align: center;
+}
+/* Pie del menú lateral: botón de cerrar sesión fijo en la parte inferior */
+.barra-lateral-pie {
+    margin-top: auto;
+    padding: 12px 10px 14px;
+    border-top: 1px solid rgba(255, 255, 255, .1);
+    flex-shrink: 0;
+}
+.barra-lateral-salir {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 12px;
+    border: 1px solid rgba(255, 255, 255, .18);
+    border-radius: var(--radio-chico);
+    background: rgba(0, 0, 0, .12);
+    color: #fff;
+    font: inherit;
+    font-size: .93rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+}
+.barra-lateral-salir .icono { width: 19px; height: 19px; }
+.barra-lateral-salir:hover,
+.barra-lateral-salir:focus-visible { background: var(--rojo-600); border-color: var(--rojo-600); }
+.barra-lateral-version {
+    margin-top: 10px;
+    padding: 0 4px;
+    font-size: .72rem;
+    color: rgba(255, 255, 255, .45);
+}
+
+/* Fondo oscuro detrás del menú en pantallas chicas */
+.barra-lateral-fondo { display: none; }
+
+.area-principal {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin-left: var(--ancho-barra-lateral);
+    transition: margin-left .22s ease;
+}
+
+/* Barra lateral contraída: la pantalla queda limpia */
+.barra-lateral-cerrada .barra-lateral { transform: translateX(-100%); }
+.barra-lateral-cerrada .area-principal { margin-left: 0; }
+
+.barra-superior {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: var(--alto-barra-superior);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 0 20px;
+    background: var(--superficie);
+    border-bottom: 1px solid var(--borde);
+    box-shadow: 0 1px 3px rgba(16, 24, 40, .05);
+}
+.boton-barra-lateral {
+    display: inline-grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--borde);
+    border-radius: var(--radio-chico);
+    background: var(--superficie);
+    color: var(--texto);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+.boton-barra-lateral:hover { background: var(--fondo); border-color: var(--borde-fuerte); }
+.boton-barra-lateral .icono { width: 20px; height: 20px; }
+.barra-superior-titulo {
+    font-weight: 600;
+    font-size: .98rem;
+    color: var(--texto-suave);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Menú de la cuenta (cambiar contraseña / cerrar sesión) */
+.menu-usuario { position: relative; margin-left: auto; }
+.menu-usuario summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 10px 5px 5px;
+    border-radius: 999px;
+    cursor: pointer;
+    user-select: none;
+    transition: background .15s;
+}
+.menu-usuario summary::-webkit-details-marker { display: none; }
+.menu-usuario summary:hover,
+.menu-usuario[open] summary { background: var(--fondo); }
+.menu-usuario-nombre { display: grid; line-height: 1.2; font-size: .88rem; font-weight: 600; }
+.menu-usuario-nombre small { font-size: .74rem; font-weight: 500; color: var(--texto-tenue); }
+.menu-usuario .icono-flecha { width: 14px; height: 14px; color: var(--texto-tenue); transition: transform .2s; }
+.menu-usuario[open] .icono-flecha { transform: rotate(180deg); }

@@ -1,0 +1,135 @@
+/* Control de Visitas · 9. Tablas */
+/* Hoja 5 de 15: se cargan en orden (ver hojasDeEstilo() en app/helpers/vista.php). */
+
+
+/* ---------- 9. Tablas ---------- */
+.tabla-contenedor {
+    overflow-x: auto;
+    border-radius: var(--radio-chico);
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .88rem;
+}
+.tabla thead th {
+    background: var(--cabecera-tabla);
+    color: #fff;
+    font-weight: 600;
+    text-align: left;
+    padding: 11px 10px;
+    white-space: nowrap;
+}
+.tabla thead th:first-child { border-top-left-radius: var(--radio-chico); }
+.tabla thead th:last-child  { border-top-right-radius: var(--radio-chico); }
+
+.tabla tbody td {
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--borde);
+    vertical-align: middle;
+}
+.tabla tbody tr { transition: background .12s; }
+.tabla tbody tr:hover { background: #fafbfc; }
+
+.tabla small { display: block; font-size: .78rem; }
+.texto-suave { color: var(--texto-tenue); }
+.texto-mono { font-family: var(--fuente-mono); font-size: .85rem; white-space: nowrap; }
+.hora { font-weight: 600; font-variant-numeric: tabular-nums; }
+.celda-motivo { min-width: 140px; max-width: 240px; }
+
+.celda-visitante {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.celda-visitante strong { font-weight: 600; white-space: nowrap; }
+.celda-visitante small { color: var(--texto-tenue); }
+
+.avatar {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--rojo-100);
+    color: var(--rojo-600);
+    font-size: .75rem;
+    font-weight: 700;
+}
+
+/* Insignias de estado */
+.insignia {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: var(--radio-chico);
+    font-size: .74rem;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+}
+.insignia-programada { background: var(--azul); }
+.insignia-en-proceso { background: var(--ambar); }
+.insignia-finalizada { background: var(--verde); }
+.insignia-cancelada  { background: var(--gris); }
+
+/* Selector para cambiar el estado */
+.form-estado { margin: 0; }
+
+.selector-estado {
+    width: 100%;
+    min-width: 150px;
+    padding: 7px 34px 7px 10px;
+    font: inherit;
+    font-size: .84rem;
+    color: var(--rojo-600);
+    background-color: var(--superficie);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231d1f24' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    border: 1px solid var(--rojo-500);
+    border-radius: var(--radio-chico);
+    appearance: none;
+    cursor: pointer;
+    transition: box-shadow .15s;
+}
+.selector-estado:hover { box-shadow: 0 0 0 3px rgba(196, 26, 43, .1); }
+.selector-estado:disabled {
+    color: var(--texto-tenue);
+    border-color: var(--borde);
+    background-color: var(--fondo);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Filtros del listado */
+.filtros {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+.filtros select { width: auto; min-width: 190px; }
+
+.campo-busqueda {
+    position: relative;
+    flex: 1;
+    min-width: 240px;
+}
+.campo-busqueda .icono {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--texto-tenue);
+    pointer-events: none;
+}
+.campo-busqueda input[type="search"] { padding-left: 40px; }
+
+.sin-resultados {
+    text-align: center;
+    padding: 24px;
+    color: var(--texto-suave);
+}

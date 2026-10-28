@@ -1,0 +1,160 @@
+/* Control de Visitas · 13. Adaptación a pantallas pequeñas; 14. Reportes */
+/* Hoja 8 de 15: se cargan en orden (ver hojasDeEstilo() en app/helpers/vista.php). */
+
+
+/* ---------- 13. Adaptación a pantallas pequeñas ---------- */
+@media screen and (max-width: 960px) {
+    .tarjetas-resumen { grid-template-columns: repeat(2, 1fr); }
+    .tarjetas-resumen .tarjeta-roja { grid-column: span 2; }
+}
+
+@media screen and (max-width: 860px) {
+    .login-envoltura { grid-template-columns: 1fr; max-width: 440px; }
+    .login-presentacion { min-height: 300px; padding: 26px 22px 16px; gap: 16px; }
+    .login-emblema { width: 56px; height: 56px; margin-bottom: 0; }
+    .login-emblema .icono { width: 28px; height: 28px; }
+    .login-titulo { font-size: 1.55rem; }
+    .login-nombre-institucion { font-size: .9rem; }
+    .login-tarjeta { padding: 28px; }
+}
+
+@media screen and (max-width: 760px) {
+    .contenedor { padding: 20px 16px 32px; }
+    .encabezado-pagina h1 { font-size: 1.45rem; }
+    .encabezado-pagina .boton { width: 100%; }
+
+    .tarjetas-resumen { grid-template-columns: 1fr; gap: 12px; }
+    .tarjetas-resumen .tarjeta-roja { grid-column: auto; }
+    .dato-numero { font-size: 2rem; }
+
+    .rejilla-2 { grid-template-columns: 1fr; }
+    .seccion-formulario { padding: 18px 16px; }
+    .acciones-formulario { flex-direction: column-reverse; }
+    .acciones-formulario .boton { width: 100%; }
+
+    /* La tabla se convierte en tarjetas apiladas */
+    .tabla thead { display: none; }
+    .tabla, .tabla tbody, .tabla tr, .tabla td { display: block; width: 100%; }
+    .tabla tbody tr {
+        border: 1px solid var(--borde);
+        border-radius: var(--radio);
+        padding: 6px 14px;
+        margin-bottom: 12px;
+    }
+    .tabla tbody td {
+        display: grid;
+        grid-template-columns: 110px 1fr;
+        gap: 10px;
+        align-items: center;
+        padding: 8px 0;
+    }
+    .tabla tbody tr td:last-child { border-bottom: 0; }
+    .tabla tbody td::before {
+        content: attr(data-etiqueta);
+        font-size: .75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: .3px;
+        color: var(--texto-tenue);
+    }
+    .selector-estado { min-width: 0; }
+    .celda-motivo { max-width: none; }
+    .filtros select { width: 100%; }
+}
+
+/* ---------- 14. Reportes ---------- */
+.filtros-reporte {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr auto;
+    gap: 16px;
+    align-items: end;
+    margin-bottom: 24px;
+}
+.filtros-reporte .campo { margin: 0; }
+
+.dato-detalle {
+    display: block;
+    margin-top: 2px;
+    font-size: .8rem;
+    color: var(--texto-suave);
+}
+
+.bloque-reporte { margin-bottom: 24px; }
+
+.tabla-reporte .numero { text-align: right; font-variant-numeric: tabular-nums; }
+.tabla-reporte tfoot th,
+.tabla-reporte tfoot td {
+    padding: 11px 10px;
+    font-weight: 700;
+    text-align: left;
+    background: var(--fondo);
+    border-top: 2px solid var(--cabecera-tabla);
+}
+.tabla-reporte tfoot .numero { text-align: right; }
+.tabla-reporte .fila-vacia td { color: var(--texto-tenue); }
+
+.columna-barra { width: 28%; min-width: 120px; }
+.barra-reporte {
+    display: block;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--rojo-500);
+}
+
+.nota-reporte {
+    margin-top: 10px;
+    font-size: .8rem;
+    color: var(--texto-tenue);
+}
+
+/* Encabezado que solo se ve en la hoja impresa */
+.solo-impresion { display: none; }
+.encabezado-impresion {
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+    border-bottom: 3px solid var(--vino-800);
+}
+.encabezado-impresion-marca {
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    color: var(--vino-800);
+}
+.encabezado-impresion h1 { font-size: 1.4rem; margin: 2px 0 4px; }
+.encabezado-impresion p { font-size: .85rem; color: var(--texto-suave); }
+
+@media screen and (max-width: 960px) {
+    .filtros-reporte { grid-template-columns: 1fr 1fr; }
+}
+
+@media screen and (max-width: 760px) {
+    .filtros-reporte { grid-template-columns: 1fr; }
+    .filtros-reporte .boton { width: 100%; }
+
+    .tabla-reporte .columna-barra { display: none; }
+    .tabla-reporte .numero { text-align: left; }
+    /* La fila de totales también se apila como tarjeta */
+    .tabla-reporte tfoot,
+    .tabla-reporte tfoot tr { display: block; }
+    .tabla-reporte tfoot tr {
+        border: 2px solid var(--cabecera-tabla);
+        border-radius: var(--radio);
+        padding: 6px 14px;
+    }
+    .tabla-reporte tfoot th,
+    .tabla-reporte tfoot td { background: none; border: 0; padding: 8px 0; }
+    .tabla-reporte tfoot th { display: block; }
+    .tabla-reporte tfoot td {
+        display: grid;
+        grid-template-columns: 110px 1fr;
+        gap: 10px;
+    }
+    .tabla-reporte tfoot td::before {
+        content: attr(data-etiqueta);
+        font-size: .75rem;
+        text-transform: uppercase;
+        color: var(--texto-tenue);
+    }
+    .tabla-reporte tfoot .numero { text-align: left; }
+}
